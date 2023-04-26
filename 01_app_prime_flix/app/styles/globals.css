@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header {
+  padding: 20px 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #444;
+}
+
+.logo,
+.my-movies {
+  color: #ddd;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.movie-list {
+  max-width: 800px;
+  margin: 14px auto;
+}
+
+.movie-list article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.movie-list strong {
+  margin-bottom: 14px;
+  text-align: center;
+  font-size: 22px;
+  display: block;
+}
+
+.movie-list img {
+  width: 290px;
+  height: 400px;
+  object-fit: fill;
+}
+
+.movie-list a {
+  width: 290px;
+  padding: 10px 0;
+  font-size: 16px;
+  background-color: #444;
+  color: #ddd;
+  text-align: center;
+  font-weight: 500;
+}
+
+.movie-info {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  padding: 0 8px;
+}
+
+.movie-info h1 {
+  margin: 14px 0;
+}
+
+.movie-info img {
+  border-radius: 3px;
+  width: 900px;
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: fill;
+}
+
+.movie-info h3 {
+  margin-top: 14px;
+}
+
+.movie-info span {
+  margin: 8px 0;
+}
+
+.btn-area {
+  margin-top: 10px;
+  padding-bottom: 50px;
+}
+
+.btn-area button {
+  margin-right: 10px;
+  margin-left: 0px;
+  font-size: 14px;
+  border: 0;
+  outline: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: #444;
+  color: #ddd;
+  font-weight: 600;
+}
+
+.btn-area a {
+  text-decoration: none;
+  color: #ddd;
+}
+
+.btn-area button:hover {
+  background: #333;
+}
