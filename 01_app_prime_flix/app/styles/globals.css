@@ -133,3 +133,61 @@ a {
 .btn-area button:hover {
   background: #333;
 }
+
+.my-list {
+  margin-top: 24px;
+}
+
+.my-list h3 {
+  margin-top: 10px;
+}
+
+.my-list span {
+  font-size: 18px;
+}
+
+.my-list ul {
+  margin-top: 10px;
+  width: 720px;
+}
+
+.my-list ul li:nth-child(odd) {
+  background: #eee;
+}
+
+.my-list ul li:nth-child(even) {
+  background: #f7f7f7;
+}
+
+.my-list ul li {
+  padding: 8px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-list div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.my-list a {
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.my-list button,
+.my-list a {
+  text-align: center;
+  border: none;
+  padding: 5px 8px;
+  width: 100px;
+  height: 30px;
+  border-radius: 2px;
+  background: #444;
+  color: #ddd;
+  cursor: pointer;
+  font-size: 14px;
+}

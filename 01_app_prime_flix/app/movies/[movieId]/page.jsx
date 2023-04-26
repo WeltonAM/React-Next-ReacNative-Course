@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const Movie = ({ params }) => {
 
@@ -49,7 +50,7 @@ const Movie = ({ params }) => {
         const hasMovie = savedMovies.some((savedMovie) => savedMovie.id === movie.id)
 
         if (hasMovie) {
-            alert('Movie already saved');
+            toast.error("Movie already saved.");
             return;
         }
 
@@ -57,7 +58,7 @@ const Movie = ({ params }) => {
 
         localStorage.setItem("@primeflix", JSON.stringify(savedMovies));
 
-        alert("Movie saved successfully!");
+        toast.success("Movie saved successfully!");
     }
 
     return (
