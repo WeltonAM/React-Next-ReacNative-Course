@@ -38,16 +38,19 @@ router.get('/category', isAuthenticated, new ListCategoryController().handle);
 
 // Product
 router.post('/product', isAuthenticated, upload.single('file'), new CreateProductController().handle);
-router.get('/product/:id', isAuthenticated, new ListProductByCategoryController().handle);
+router.get('/product', isAuthenticated, new ListProductByCategoryController().handle);
 
 // Order
 router.get('/orders', isAuthenticated, new ListOrdersController().handle);
 router.get('/order/detail', isAuthenticated, new DetailOrderController().handle);
+
 router.post('/order', isAuthenticated, new CreateOrderController().handle);
-router.delete('/order', isAuthenticated, new RemoveOrderController().handle);
 router.post('/order/add', isAuthenticated, new AddItemController().handle);
-router.delete('/item', isAuthenticated, new RemoveItemController().handle);
+
 router.put('/order', isAuthenticated, new SendOrderController().handle);
 router.put('/order/finish', isAuthenticated, new FinishOrderController().handle);
+
+router.delete('/order', isAuthenticated, new RemoveOrderController().handle);
+router.delete('/item', isAuthenticated, new RemoveItemController().handle);
 
 export { router };
