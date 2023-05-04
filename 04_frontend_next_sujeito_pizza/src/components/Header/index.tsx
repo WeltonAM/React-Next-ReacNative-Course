@@ -19,7 +19,7 @@ const Header = () => {
 
                 <nav className={styles.menuNav}>
                     <Link href="/category">Categoria</Link>
-                    <Link href="/menu">Menu</Link>
+                    <Link href="/product">Menu</Link>
 
                     <button onClick={signOut}>
                         <FiLogOut color='#fff' size={24} />
