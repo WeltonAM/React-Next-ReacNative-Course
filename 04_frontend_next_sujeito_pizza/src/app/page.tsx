@@ -5,10 +5,13 @@ import logo from '../../public/logo.svg';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { AuthContext } from './context/AuthContext';
 
 export default function Home() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const { signIn } = useContext(AuthContext);
 
@@ -16,8 +19,8 @@ export default function Home() {
     event.preventDefault();
 
     let data = {
-      email: "algum@teste.com",
-      password: "123456",
+      email,
+      password
     }
 
     await signIn(data);
@@ -29,12 +32,17 @@ export default function Home() {
 
       <div className={styles.login}>
         <form onSubmit={handleLogin}>
+
           <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type='text'
             placeholder='Digite seu email...'
           />
 
           <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type='password'
             placeholder='Digite seu senha...'
           />
