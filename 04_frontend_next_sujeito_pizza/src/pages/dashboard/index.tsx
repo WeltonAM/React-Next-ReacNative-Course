@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from "@/components/Header";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import Head from "next/head";
 import styles from './styles.module.scss';
 import { FiRefreshCcw } from "react-icons/fi";
 import { setUpAPIClient } from "@/services/api";
+import Modal from 'react-modal';
+import { ModalOrder } from '@/components/ModalOrder';
 
 type OrderProps = {
     id: string,
@@ -21,13 +23,68 @@ interface OrderListProps {
     ordersList: OrderProps[]
 }
 
+export type OrderItemProps = {
+    id: string,
+    amount: number,
+    order_id: string,
+    product_id: string,
+    product: {
+        id: string,
+        name: string,
+        description: string,
+        price: string,
+        banner: string
+    },
+    order: {
+        id: string,
+        table: string | number,
+        status: boolean,
+        name: string | null
+    }
+}
+
 const dashboard = ({ ordersList }: OrderListProps) => {
 
     const [orderList, setOrderList] = useState(ordersList || []);
+    const [modalItem, setModalItem] = useState<OrderItemProps[]>();
+    const [modalVisible, setModalVisible] = useState(false);
 
-    function handleOpenModalView(itemId: string) {
-        alert(itemId);
+    function handleCloseModal() {
+        setModalVisible(false);
     }
+
+    async function handleOpenModalView(itemId: string) {
+        const apiClient = setUpAPIClient();
+        const response = await apiClient.get('/order/detail', {
+            params: {
+                order_id: itemId,
+            }
+        });
+
+        setModalItem(response.data);
+        setModalVisible(true);
+    }
+
+    async function handleFinishOrder(id: string) {
+        const apiClient = setUpAPIClient();
+        await apiClient.put('/order/finish', {
+            order_id: id
+        });
+
+        const response = await apiClient.get('/orders');
+
+        setOrderList(response.data);
+
+        setModalVisible(false);
+    }
+
+    async function handleRefreshOrders() {
+        const apiClient = setUpAPIClient();
+        const response = await apiClient.get('/orders');
+        setOrderList(response.data);
+    }
+
+    Modal.setAppElement('#__next');
 
     return (
         <>
@@ -41,12 +98,16 @@ const dashboard = ({ ordersList }: OrderListProps) => {
                 <main className={styles.container}>
                     <div className={styles.containerHeader}>
                         <h1>Pedidos</h1>
-                        <button>
+                        <button onClick={handleRefreshOrders}>
                             <FiRefreshCcw color="#3fffa3" size={25} />
                         </button>
                     </div>
 
                     <article className={styles.listOrders}>
+
+                        {orderList.length === 0 && (
+                            <span className={styles.empty}>Nenhum pedido aberto</span>
+                        )}
 
                         {orderList.map((item) => (
                             <section key={item.id} className={styles.orderItem}>
@@ -59,6 +120,15 @@ const dashboard = ({ ordersList }: OrderListProps) => {
 
                     </article>
                 </main>
+
+                {modalVisible && (
+                    <ModalOrder
+                        isOpen={modalVisible}
+                        onRequestClose={handleCloseModal}
+                        order={modalItem}
+                        handleFinishOrder={handleFinishOrder}
+                    />
+                )}
             </div>
         </>
     );
