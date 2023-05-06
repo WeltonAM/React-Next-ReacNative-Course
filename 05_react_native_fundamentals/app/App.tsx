@@ -1,91 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+/* eslint-disable prettier/prettier */
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-import React from 'react';
-import type { PropsWithChildren } from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+export default function App() {
+  const [name, setName] = useState('');
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  function handleMudaNome() {
+    setName('Linda');
+  }
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({ children, title }: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      <Text style={[styles.title]}>Juliana</Text>
+      <Text style={[styles.title, styles.text]}>Karla</Text>
+      <Text>{name}</Text>
+      <TouchableOpacity style={styles.button} onPress={handleMudaNome}>
+        <Text>Toque aqui!</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <Text>Hello, Juliana!</Text>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#ddd',
+    padding: 10,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+
+  title: {
+    fontSize: 32,
+    color: '#121212',
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+
+  text: {
+    color: '#aaa',
   },
-  highlight: {
-    fontWeight: '700',
+
+  button: {
+    backgroundColor: 'magenta',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
   },
 });
-
-export default App;
