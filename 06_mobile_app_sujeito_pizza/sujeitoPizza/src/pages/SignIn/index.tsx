@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import {
     View,
     Text,
@@ -9,10 +9,27 @@ import {
     TouchableWithoutFeedback,
     Keyboard
 } from 'react-native';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function SignIn() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const { signIn } = useContext(AuthContext);
+
+    async function handleLogin() {
+
+        if (email === '' || password === '') {
+            return;
+        }
+
+        await signIn({ email, password });
+    }
+
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+
 
             <View style={styles.container}>
                 <Image
@@ -25,6 +42,8 @@ export default function SignIn() {
                         style={styles.input}
                         placeholder='Digite seu email...'
                         placeholderTextColor="#f0f0f0"
+                        value={email}
+                        onChangeText={setEmail}
                     />
 
                     <TextInput
@@ -32,9 +51,11 @@ export default function SignIn() {
                         placeholder='Digite sua senha...'
                         placeholderTextColor="#f0f0f0"
                         secureTextEntry={true}
+                        value={password}
+                        onChangeText={setPassword}
                     />
 
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity onPress={handleLogin} style={styles.button}>
                         <Text style={styles.btnText}>Acessar</Text>
                     </TouchableOpacity>
                 </View>
