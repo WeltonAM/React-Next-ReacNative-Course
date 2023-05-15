@@ -7,7 +7,8 @@ import {
     TextInput,
     TouchableOpacity,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    ActivityIndicator
 } from 'react-native';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -16,7 +17,7 @@ export default function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const { signIn } = useContext(AuthContext);
+    const { signIn, loadingAuth } = useContext(AuthContext);
 
     async function handleLogin() {
 
@@ -28,9 +29,8 @@ export default function SignIn() {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-
-
+        <TouchableWithoutFeedback touchSoundDisabled onPress={() => Keyboard.dismiss()
+        }>
             <View style={styles.container}>
                 <Image
                     style={styles.logo}
@@ -56,11 +56,15 @@ export default function SignIn() {
                     />
 
                     <TouchableOpacity onPress={handleLogin} style={styles.button}>
-                        <Text style={styles.btnText}>Acessar</Text>
+                        {loadingAuth ? (
+                            <ActivityIndicator size={25} color="#fff" />
+                        ) : (
+                            <Text style={styles.btnText}>Acessar</Text>
+                        )}
                     </TouchableOpacity>
                 </View>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback >
     );
 }
 
