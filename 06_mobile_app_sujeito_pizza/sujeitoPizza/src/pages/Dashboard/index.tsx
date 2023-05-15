@@ -1,7 +1,21 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamsList } from '../../routes/app.routes';
 
 export default function Dashboard() {
+
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
+
+    const [number, serNumber] = useState('');
+
+    async function openOrder() {
+        if (number === '') return;
+
+        navigation.navigate('Order', { number: number, order_id: '' });
+    }
+
     return (
         <TouchableWithoutFeedback touchSoundDisabled onPress={() => Keyboard.dismiss()
         }>
@@ -14,9 +28,11 @@ export default function Dashboard() {
                     placeholderTextColor='#f0f0f0'
                     style={styles.input}
                     keyboardType='numeric'
+                    value={number}
+                    onChangeText={serNumber}
                 />
 
-                <TouchableOpacity style={styles.btn}>
+                <TouchableOpacity style={styles.btn} onPress={openOrder}>
                     <Text style={styles.btnText}>Abrir mesa</Text>
                 </TouchableOpacity>
 
