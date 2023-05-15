@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BASE_URL } from '@env';
 
 const api = axios.create({
-    // baseURL: 'http://192.168.0.152:3333'
+    baseURL: BASE_URL
 });
 
 export { api };
