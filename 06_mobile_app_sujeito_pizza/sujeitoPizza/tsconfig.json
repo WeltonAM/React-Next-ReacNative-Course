@@ -3,6 +3,9 @@
   "compilerOptions": {
     "typeRoots": [
       "./src/types"
+    ],
+    "types": [
+      "jest"
     ]
   }
 }

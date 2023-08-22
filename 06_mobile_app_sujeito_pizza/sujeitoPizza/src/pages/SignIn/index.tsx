@@ -41,7 +41,7 @@ export default function SignIn() {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
-                        placeholder='Digite seu email...'
+                        placeholder='Email'
                         placeholderTextColor="#f0f0f0"
                         value={email}
                         onChangeText={setEmail}
@@ -49,7 +49,7 @@ export default function SignIn() {
 
                     <TextInput
                         style={styles.input}
-                        placeholder='Digite sua senha...'
+                        placeholder='Senha'
                         placeholderTextColor="#f0f0f0"
                         secureTextEntry={true}
                         value={password}
