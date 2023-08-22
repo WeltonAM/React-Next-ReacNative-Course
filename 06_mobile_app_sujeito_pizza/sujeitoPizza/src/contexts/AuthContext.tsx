@@ -40,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [loadingAuth, setLoadingAuth] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const isAuthenticated = !!user.name;
+    let isAuthenticated = !!user.name;
 
     useEffect(() => {
         async function getUser() {
@@ -106,7 +106,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     name: '',
                     email: '',
                     token: ''
-                })
+                });
+
+                isAuthenticated = false;
             })
     }
 

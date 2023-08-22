@@ -1,7 +1,8 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { api } from '../../services/api';
 
 type RouteDetailParams = {
     Order: {
@@ -13,15 +14,30 @@ type RouteDetailParams = {
 type OrderRouteProps = RouteProp<RouteDetailParams, 'Order'>;
 
 export default function Order() {
-
     const route = useRoute<OrderRouteProps>();
+    const navigation = useNavigation();
+
+    async function handleCloseOrder() {
+        try {
+            await api.delete('/order', {
+                params: {
+                    order_id: route.params?.order_id
+                }
+            });
+
+            navigation.goBack();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Mesa {route.params.number}</Text>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleCloseOrder}>
                     <Icon name="trash" size={36} color="#ff3f4b" />
                 </TouchableOpacity>
             </View>
@@ -45,7 +61,17 @@ export default function Order() {
 
                 />
             </View>
-        </View>
+
+            <View style={styles.actions}>
+                <TouchableOpacity style={styles.buttonAdd} >
+                    <Text style={styles.buttonText}>+</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>Avançar</Text>
+                </TouchableOpacity>
+            </View>
+        </View >
     )
 }
 
@@ -95,5 +121,35 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#fff',
+    },
+
+    actions: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between',
+    },
+
+    buttonAdd: {
+        width: '20%',
+        backgroundColor: '#3fd1ff',
+        borderRadius: 4,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    buttonText: {
+        color: '#101026',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+
+    button: {
+        backgroundColor: '#3fffa3',
+        borderRadius: 4,
+        height: 40,
+        width: '75%',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })

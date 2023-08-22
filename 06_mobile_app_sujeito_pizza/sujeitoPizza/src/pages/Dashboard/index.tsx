@@ -1,19 +1,30 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, TextInput, StyleSheet, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { StackParamsList } from '../../routes/app.routes';
+import { api } from '../../services/api';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Dashboard() {
 
     const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
-    const [number, serNumber] = useState('');
+    const [number, setNumber] = useState('');
+
+    const { signOut } = useContext(AuthContext);
 
     async function openOrder() {
         if (number === '') return;
 
-        navigation.navigate('Order', { number: number, order_id: '' });
+        const response = await api.post('/order', {
+            table: Number(number)
+        });
+
+        navigation.navigate('Order', { number: number, order_id: response.data.id });
+
+        setNumber('');
     }
 
     return (
@@ -21,6 +32,10 @@ export default function Dashboard() {
         }>
 
             <SafeAreaView style={styles.container}>
+                <TouchableOpacity style={styles.logOut} onPress={signOut}>
+                    <Icon name="sign-out" size={30} color="#ff3f4b" />
+                </TouchableOpacity>
+
                 <Text style={styles.title}>Novo Pedido</Text>
 
                 <TextInput
@@ -29,7 +44,7 @@ export default function Dashboard() {
                     style={styles.input}
                     keyboardType='numeric'
                     value={number}
-                    onChangeText={serNumber}
+                    onChangeText={setNumber}
                 />
 
                 <TouchableOpacity style={styles.btn} onPress={openOrder}>
@@ -82,5 +97,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#101026',
         fontWeight: 'bold'
+    },
+
+    logOut: {
+        position: 'absolute',
+        top: 20,
+        right: 20,
     }
 })
