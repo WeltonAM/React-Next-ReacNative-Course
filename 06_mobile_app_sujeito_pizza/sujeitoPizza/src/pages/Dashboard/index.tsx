@@ -19,7 +19,8 @@ export default function Dashboard() {
         if (number === '') return;
 
         const response = await api.post('/order', {
-            table: Number(number)
+            table: Number(number),
+            name: `Mesa ${Number(number)}`
         });
 
         navigation.navigate('Order', { number: number, order_id: response.data.id });

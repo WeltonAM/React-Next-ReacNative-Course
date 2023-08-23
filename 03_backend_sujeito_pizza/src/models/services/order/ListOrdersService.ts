@@ -4,8 +4,8 @@ class ListOrdersService {
     async execute() {
         const order = prismaClient.order.findMany({
             where: {
-                draft: false,
-                status: false,
+                draft: true,
+                status: true,
             },
             orderBy: {
                 created_at: 'desc',
